@@ -8,7 +8,7 @@ interface Counter {
   d: number
 }
 
-export const dijksta = (graph: Graph<string>, start: string) => {
+export const dijkstra = (graph: Graph<string>, start: string) => {
   const queue = new Heap<Counter>((r,l) => r.d - l.d)
   queue.push({node: start, d: 0})
   const distances: Record<string, number> = {}

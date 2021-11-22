@@ -1,7 +1,7 @@
 import { Graph } from './graph'
 import { loadGraph } from './graph_from_fs'
 import { bfs } from './bfs'
-import { dijksta } from './dijkstra'
+import { dijkstra } from './dijkstra'
 import { dfs } from './dfs'
 
 
@@ -12,7 +12,7 @@ const main = async () => {
   console.log(dfs(graph, '1'))
   const graph2 = await loadGraph('./graph2.txt')
   console.log(graph2)
-  console.log(dijksta(graph2, '1'))
+  console.log(dijkstra(graph2, '1'))
 }
 
 main()
