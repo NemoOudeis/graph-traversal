@@ -1,9 +1,9 @@
 import express from "express"
-import { dfs } from "./dfs"
-import { bfs } from "./bfs"
-import { dijkstra } from "./dijkstra"
-import { graph, Graph } from "./graph"
-import { log } from "./log"
+import { dfs } from "../core/dfs"
+import { bfs } from "../core/bfs"
+import { dijkstra } from "../core/dijkstra"
+import { graph, Graph } from "../core/graph"
+import { log } from "../core/log"
 import * as OpenApiValidator from 'express-openapi-validator'
 
 const app = express()
@@ -13,7 +13,7 @@ app.use(express.json())
 
 app.use(
   OpenApiValidator.middleware({
-    apiSpec: './graph-traversal.yml',
+    apiSpec: './web/graph-traversal.yml',
     validateRequests: true, // (default)
     validateResponses: true, // false by default
   }),

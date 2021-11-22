@@ -1,5 +1,5 @@
 import * as fs from 'fs/promises'
-import { graph, Graph } from './graph'
+import { graph, Graph } from '../core/graph'
 
 export const loadGraph = async (file: string): Promise<Graph<string>> => {
   const input = await fs.readFile(file, { encoding: 'utf-8' })

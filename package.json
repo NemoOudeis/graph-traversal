@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "ts-node index.ts",
-    "dev": "ts-node-dev server.ts"
+    "cli": "ts-node cli/index.ts",
+    "dev": "ts-node-dev web/server.ts"
   },
   "author": "",
   "license": "ISC",
