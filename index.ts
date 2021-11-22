@@ -1,6 +1,8 @@
-import { Graph, loadGraph } from './graph'
-import { dfs, bfs } from './exhaustive_search'
+import { Graph } from './graph'
+import { loadGraph } from './graph_from_fs'
+import { bfs } from './bfs'
 import { dijksta } from './dijkstra'
+import { dfs } from './dfs'
 
 
 const main = async () => {

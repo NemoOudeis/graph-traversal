@@ -1,5 +1,3 @@
-import * as fs from 'fs/promises'
-
 export interface Graph<T> {
   nodes: Set<T>
   edges: Edge<T>[]
@@ -13,39 +11,18 @@ export interface Edge<T> {
   weight: number
 }
 
-export const loadGraph = async (file: string): Promise<Graph<string>> => {
-  const input = await fs.readFile(file, { encoding: 'utf-8' })
-  const edges = input.split('\n')
-    .map(it => it.split(" -> "))
-    .map(it => [it[0], ...it[1].split(' : ')])
-    .map(it => { 
-      return {
-        src: it[0], 
-        dst: it[1], 
-        weight: Number(it[2]) || 0
-      } 
-    })
-
-  const nodes = new Set<string>()
-  edges.forEach(it => {
-    nodes.add(it.src)
-    nodes.add(it.dst)
-  })
-
+export const graph = <T>(edges: Edge<T>[]): Graph<T> => {
   return {
-    nodes,
+    nodes: new Set<T>(edges.map(it => [it.src, it.dst]).flat()),
     edges,
-    neighbors: (node: string): Set<string> => {
-      const out = new Set<string>()
+    neighbors: (node: T): Set<T> => {
+      const out = new Set<T>()
       edges.filter(it => it.src === node)
           .forEach(it => out.add(it.dst))
       return out
     },
-    edge: (src: string, dst: string): Edge<string> | undefined => {
+    edge: (src: T, dst: T): Edge<T> | undefined => {
       return edges.find(it => it.src === src && it.dst === dst)
     }
   }
 }
-
-
-
