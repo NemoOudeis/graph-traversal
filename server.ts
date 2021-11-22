@@ -1,5 +1,7 @@
 import express from "express"
 import { dfs } from "./dfs"
+import { bfs } from "./bfs"
+import { dijkstra } from "./dijkstra"
 import { graph, Graph } from "./graph"
 import { log } from "./log"
 import * as OpenApiValidator from 'express-openapi-validator'
@@ -17,12 +19,20 @@ app.use(
   }),
 );
 
-app.post('/dfs', (req, res) => {
-  validate(req)
+const algos = {
+  dfs,
+  bfs,
+  dijkstra
+}
+
+app.post('/:algo', (req, res) => {
   const graph = parseGraph(req.body.graph)
-  const start = req.body.start || '1'
+  const start = req.body.start
   
-  const result = dfs(graph, start)
+  const algo: string = req.params.algo
+  const fun = (algos as any)[algo]
+
+  const result = fun(graph, start)
 
   const distances = Object.entries(result).map(it => {
     return {
@@ -42,8 +52,6 @@ app.post('/dfs', (req, res) => {
 })
 
 app.use((err: any, req: any, res: any, next: any) => {
-  // log(err)
-  // format error
   res.status(err.status || 500).json({
     message: err.message,
     errors: err.errors,
@@ -58,7 +66,6 @@ interface GraphRequest {
   edges: string[][]
 }
 
-const validate = (_req: any): void => {}
 const parseGraph = (input: GraphRequest): Graph<string> => {
   const edges = input.edges.map(it => {
     return {

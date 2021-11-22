@@ -6,8 +6,17 @@ info:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  /dfs:
-    parameters: []
+  '/{algo}':
+    parameters:
+      - schema:
+          type: string
+          enum:
+            - dfs
+            - bfs
+            - dijkstra
+        name: algo
+        in: path
+        required: true
     post:
       responses:
         '200':
@@ -306,12 +315,8 @@ components:
               errors:
                 type: array
                 uniqueItems: true
-                minItems: 1
                 items:
-                  required:
-                    - path
-                    - message
-                    - errorCode
+                  type: object
                   properties:
                     path:
                       type: string
@@ -322,6 +327,9 @@ components:
                     errorCode:
                       type: string
                       minLength: 1
+                  required:
+                    - path
+                    - message
             required:
               - message
               - errors
